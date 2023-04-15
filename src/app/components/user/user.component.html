@@ -1,0 +1,26 @@
+<mat-card class="card">
+  <div class="user">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image">
+        <img [src]="user?.avatar" alt="user avatar" class="image" />
+      </div>
+
+      <mat-card-title>Admin</mat-card-title>
+      <mat-card-subtitle
+        >{{ user?.first_name }} {{ user?.last_name }}</mat-card-subtitle
+      >
+    </mat-card-header>
+  </div>
+
+  <button
+    mat-icon-button
+    aria-label="Example icon button with a vertical three dot icon"
+    (click)="toggle()"
+  >
+    <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="leftMenu?.toggle()">View profile</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+</mat-card>

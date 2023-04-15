@@ -1,0 +1,12 @@
+.card {
+  display: flex;
+  box-shadow: none;
+
+  .user {
+    display: flex;
+
+    .image {
+      max-width: 50px;
+    }
+  }
+}

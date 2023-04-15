@@ -1,0 +1,28 @@
+<div class="profile-body" *ngIf="isActive">
+  <div class="profile-panel">
+    <div class="profile-image">
+      <img [src]="userProfile?.avatar" width="200px" />
+    </div>
+    <div class="profile-detail">
+      <h1>
+        {{ userProfile?.first_name | uppercase }}
+        {{ userProfile?.last_name | uppercase }}
+      </h1>
+      <div style="text-align: start">
+        <p><b>e-mail:</b> {{ userProfile?.email }}</p>
+        <p><b>user ID:</b> {{ userProfile?.id }}</p>
+      </div>
+
+      <button
+        mat-raised-button
+        color="warn"
+        class="close-btn"
+        routerLink="/home"
+        style="margin-top: '20px'"
+        (click)="showProfile()"
+      >
+        <span>{{ "close" | uppercase }}</span>
+      </button>
+    </div>
+  </div>
+</div>
