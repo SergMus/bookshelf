@@ -14,13 +14,21 @@
 
   <button
     mat-icon-button
-    aria-label="Example icon button with a vertical three dot icon"
-    (click)="toggle()"
+    [matMenuTriggerFor]="menu"
+    aria-label="Example icon-button with a menu"
   >
-    <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+    <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="leftMenu?.toggle()">View profile</button>
-    <button mat-menu-item (click)="logout()">Logout</button>
+    <!-- <button mat-menu-item (click)="leftMenu?.toggle()">View profile</button>
+    <button mat-menu-item (click)="logout()">Logout</button> -->
+    <button mat-menu-item (click)="toggle()">
+      <mat-icon>person</mat-icon>
+      <span>View profile</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
   </mat-menu>
 </mat-card>
