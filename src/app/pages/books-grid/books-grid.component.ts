@@ -1,6 +1,12 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatRow, MatRowDef, MatTableDataSource } from '@angular/material/table';
 import { MatSelect } from '@angular/material/select';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -9,6 +15,8 @@ import { IBook } from 'src/app/shared/models/books.interface';
 import { BooksListService } from 'src/app/services/books-list/books-list.service';
 import { Unsubscriber } from 'src/app/shared/classes/destroy.abstract';
 import { takeUntil } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'books-grid',
@@ -16,6 +24,10 @@ import { takeUntil } from 'rxjs';
   styleUrls: ['./books-grid.component.scss'],
 })
 export class BooksGridComponent extends Unsubscriber implements OnDestroy {
+  @ViewChild('search') searchInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('filterSelect') filterInput!: MatSelect;
+  @ViewChild('sortSelect') sortInput!: MatSelect;
+
   public readonly displayedColumns: string[] = [
     'position',
     'title',
@@ -24,10 +36,14 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
     'date',
   ];
   public booksList: IBook[] = [];
-  public pageTitle = 'Books shelf';
-
+  public pageTitle = 'Bookshelf';
+  public selectedIndex: number = -1;
   public dataSource?: any = null;
   public dateRange: Date[] = [];
+  public rangeDatePicker = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   public selectOptionsSort: string[] = ['title', 'count', 'date'];
   public selectOptionsFilter: string[] = ['current Month', 'current Year'];
@@ -67,6 +83,36 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
       });
   }
 
+  public resetPage(): void {
+    this.dataSource.filter = '';
+    this.dateRange = [];
+    this.rangeDatePicker.reset();
+    this.searchInput.nativeElement.value = '';
+    this.filterInput.value = null;
+    this.sortInput.value = null;
+    this.selectedIndex = -1;
+    this.getBooksList();
+  }
+
+  public onRowClick(row: HTMLTableElement): void {
+    this.selectedIndex = +row.id;
+  }
+
+  public setDateRange(): void {
+    const start = this.rangeDatePicker.get('start')?.value;
+    const end = this.rangeDatePicker.get('end')?.value;
+
+    if (start && end) {
+      this.dateRange = [start, end];
+    }
+
+    this.booksListService.filterData(
+      'datePicker',
+      this.dataSource,
+      this.dateRange
+    );
+  }
+
   public onSortSelect(option: MatSelect): void {
     let column: string = option.value;
 
@@ -74,30 +120,7 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
   }
 
   public onFilterSelect(option: MatSelect): void {
-    let column: string = option.value;
-
-    const now = new Date();
-
-    if (column === undefined) {
-      const defaultStartDate = new Date(0, 0, 0);
-
-      this.dateRange = [defaultStartDate, now];
-      this.filterByDateRange();
-    }
-
-    if (column === 'current Month') {
-      const firstDateOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-
-      this.dateRange = [firstDateOfMonth, now];
-      this.filterByDateRange();
-    }
-
-    if (column === 'current Year') {
-      const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
-
-      this.dateRange = [firstDayOfYear, now];
-      this.filterByDateRange();
-    }
+    this.booksListService.filterData(option, this.dataSource, this.dateRange);
   }
 
   public sortData(sort: Sort): void {
@@ -108,24 +131,6 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
     );
 
     this.refreshData(this.dataSource);
-  }
-
-  public filterByDateRange(): void {
-    const fromDate = this.dateRange[0];
-    const toDate = this.dateRange[1];
-
-    if (!fromDate || !toDate) {
-      return;
-    }
-
-    if (this.dataSource && this.dataSource.data.length) {
-      this.dataSource.filterPredicate = (book: IBook) => {
-        const publicationDate = new Date(book.publishDate);
-        return publicationDate >= fromDate && toDate >= publicationDate;
-      };
-
-      this.dataSource.filter = JSON.stringify(true);
-    }
   }
 
   public onInput(text: HTMLInputElement): void {

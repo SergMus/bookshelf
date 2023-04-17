@@ -13,7 +13,7 @@ import { ToggleState } from './shared/models/toggle.enum';
 })
 export class AppComponent implements OnInit {
   @ViewChild('leftMenu') menu?: MatSidenav;
-  public title: string = 'books';
+  public title: string = 'bookshelf';
   public isLogined?: boolean = false;
   public isPanelActive: boolean = false;
   public isProfileActive: boolean = false;

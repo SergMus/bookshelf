@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MatSelect } from '@angular/material/select';
 import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { IBook } from 'src/app/shared/models/books.interface';
 
 @Injectable({
@@ -34,6 +36,66 @@ export class BooksListService {
     });
 
     return source;
+  }
+
+  public filterByDateRange(
+    dataSource: MatTableDataSource<IBook>,
+    dateRange: Date[]
+  ) {
+    const fromDate = dateRange[0];
+    const toDate = dateRange[1];
+
+    if (!fromDate || !toDate) {
+      return;
+    }
+
+    if (dataSource && dataSource.data.length) {
+      dataSource.filterPredicate = (book: IBook) => {
+        const publicationDate = new Date(book.publishDate);
+        return publicationDate >= fromDate && toDate >= publicationDate;
+      };
+
+      dataSource.filter = JSON.stringify(true);
+    }
+  }
+
+  public filterData(
+    option: MatSelect | string,
+    dataSource: MatTableDataSource<IBook>,
+    dateRange: Date[]
+  ): void {
+    let column: string = '';
+
+    if (option instanceof MatSelect) {
+      column = option.value;
+    }
+
+    const now = new Date();
+
+    if (column === undefined) {
+      const defaultStartDate = new Date(0, 0, 0);
+
+      dateRange = [defaultStartDate, now];
+      this.filterByDateRange(dataSource, dateRange);
+    }
+
+    if (column === 'current Month') {
+      const firstDateOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+      dateRange = [firstDateOfMonth, now];
+      this.filterByDateRange(dataSource, dateRange);
+    }
+
+    if (column === 'current Year') {
+      const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
+
+      dateRange = [firstDayOfYear, now];
+      this.filterByDateRange(dataSource, dateRange);
+    }
+
+    if ('datePicker') {
+      this.filterByDateRange(dataSource, dateRange);
+    }
   }
 
   public compare(

@@ -9,6 +9,10 @@
   width: 100%;
   table-layout: fixed;
 
+  // & .active {
+  //   background-color: #f5f5f5;
+  // }
+
   th,
   td {
     overflow: hidden;
@@ -26,21 +30,42 @@
     font-weight: 700;
     font-size: 18px;
   }
+
+  .row {
+    cursor: pointer;
+
+    &.hightlighted {
+      background-color: #f5f5f5;
+    }
+  }
 }
-.spacer {
-  flex: 1 1 auto;
+
+.toolbar-row {
+  background-color: "#cccc";
+  height: 80px;
+
+  .search {
+    font-size: 14px;
+    margin-right: 20px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .sortby {
+    width: 120px;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .filterby {
+    width: 150px;
+    font-size: 14px;
+    margin-left: 10px;
+  }
 }
 
 th.mat-sort-header-sorted {
   color: black;
-}
-
-.sortby {
-  width: 120px;
-  font-size: 14px;
-}
-
-.filterby {
-  width: 150px;
-  font-size: 14px;
 }

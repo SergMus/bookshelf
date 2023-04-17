@@ -5,7 +5,7 @@
     </mat-card-title>
   </mat-card-header>
   <mat-toolbar>
-    <mat-toolbar-row style="background-color: '#cccc'; height: 80px">
+    <mat-toolbar-row class="toolbar-row">
       <button
         mat-mini-fab
         color="#BABABA"
@@ -15,30 +15,58 @@
         <mat-icon>add</mat-icon>
       </button>
 
-      <button mat-mini-fab color="#BABABA" (click)="getBooksList()">
+      <button mat-mini-fab color="#BABABA" (click)="resetPage()">
         <mat-icon>refresh</mat-icon>
       </button>
       <span class="spacer"></span>
       <div class="example-container">
-        <mat-form-field style="font-size: 14px; margin-right: 20px">
+        <mat-form-field class="search">
           <mat-label>search</mat-label>
           <input
             matInput
-            #myInput
+            #search
             placeholder="search"
-            (input)="onInput(myInput)"
+            (input)="onInput(search)"
             style="padding-left: 5px"
           />
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Publication Date Range</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="dateRange" />
+        <mat-form-field appearance="fill" class="date-picker">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input
+            [formGroup]="rangeDatePicker"
+            [rangePicker]="picker"
+          >
+            <input
+              #start
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="End date"
+              (dateChange)="setDateRange()"
+            />
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
-            matSuffix
+            matIconSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error
+            *ngIf="
+              rangeDatePicker.controls.start.hasError('matStartDateInvalid')
+            "
+            >Invalid start date</mat-error
+          >
+          <mat-error
+            *ngIf="rangeDatePicker.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field class="filterby">
@@ -118,7 +146,13 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      class="row"
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [ngClass]="{ hightlighted: row.id === selectedIndex }"
+      (click)="onRowClick(row)"
+    ></tr>
   </table>
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20]"

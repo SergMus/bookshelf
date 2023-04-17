@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BooksGridComponent } from './books-grid.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -17,6 +17,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
   ],
