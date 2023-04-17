@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  height: calc(100vh - 65px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  min-width: 150px;
+  max-width: 800px;
+  width: 100%;
+
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 20px;
+  .card {
+    padding: 80px 50px;
+    border-radius: 10px;
+    background: center/cover no-repeat url("../../../assets/form-bg.jpg");
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin: 10px 0;
+}
+
+td {
+  padding-right: 8px;
+}
+
+mat-form-field {
+  background-color: rgba(246, 246, 246, 0.9);
+}
+
+.btn-submit {
+  margin-left: auto;
+  display: block;
+  background-color: #076be7 !important;
+
+  &.disabled {
+    background-color: #dcdcdc !important;
+  }
+}

@@ -1,0 +1,117 @@
+<div class="container">
+  <form class="form" [formGroup]="form">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>
+          <h1>{{ pageTitle | uppercase }}</h1>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <table class="full-width">
+          <tr>
+            <td>
+              <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Title</mat-label>
+                <input
+                  matInput
+                  formControlName="title"
+                  [errorStateMatcher]="matcher"
+                />
+                <mat-error
+                  *ngIf="
+                    form?.get('title')?.hasError('minlength') &&
+                    !form?.get('title')?.hasError('required')
+                  "
+                  >Min length is 2 symbols.
+                </mat-error>
+                <mat-error *ngIf="form?.get('title')?.hasError('required')">
+                  Field is required
+                </mat-error>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Description</mat-label>
+                <input
+                  matInput
+                  type="email"
+                  formControlName="description"
+                  [errorStateMatcher]="matcher"
+                />
+                <mat-error
+                  *ngIf="
+                    form?.get('description')?.hasError('minlength') &&
+                    !form?.get('description')?.hasError('required')
+                  "
+                  >Min length is 2 symbols
+                </mat-error>
+                <mat-error
+                  *ngIf="form?.get('description')?.hasError('required')"
+                >
+                  Field is required
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Publish date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="publishDate"
+                  (dateChange)="addDate($event)"
+                />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error
+                  *ngIf="form?.get('publishDate')?.hasError('required')"
+                >
+                  Field is required
+                </mat-error>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Pages count</mat-label>
+                <input
+                  matInput
+                  formControlName="pageCount"
+                  [errorStateMatcher]="matcher"
+                />
+                <mat-error
+                  *ngIf="
+                    form?.get('pageCount')?.hasError('pattern') &&
+                    !form?.get('pageCount')?.hasError('required')
+                  "
+                >
+                  Allowed only digits
+                </mat-error>
+                <mat-error *ngIf="form?.get('pageCount')?.hasError('required')">
+                  Field is required
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="btn-submit"
+          [disabled]="form.invalid"
+          [ngClass]="{ disabled: form.invalid }"
+          (click)="submit()"
+        >
+          {{ buttonText | titlecase }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

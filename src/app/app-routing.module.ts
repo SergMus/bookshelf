@@ -16,6 +16,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'books/create',
+    loadChildren: () =>
+      import('./pages/book-form/book-form.module').then(
+        (m) => m.BookFormModule
+      ),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },

@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { HttpService } from './services/http/http.service';
+import { API_URL_1, API_URL_2 } from './shared/constants/inject-tokens';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -24,7 +26,14 @@ const INTERCEPTOR_PROVIDER: Provider = {
 };
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, UserComponent, LoginComponent, ToolbarComponent, UserProfileComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    UserComponent,
+    LoginComponent,
+    ToolbarComponent,
+    UserProfileComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,7 +42,15 @@ const INTERCEPTOR_PROVIDER: Provider = {
     HttpClientModule,
     MaterialModule,
   ],
-  providers: [INTERCEPTOR_PROVIDER],
+  providers: [
+    INTERCEPTOR_PROVIDER,
+    HttpService,
+    { provide: API_URL_1, useValue: 'https://reqres.in/api/users/' },
+    {
+      provide: API_URL_2,
+      useValue: 'https://fakerestapi.azurewebsites.net/api/v1/Books',
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
