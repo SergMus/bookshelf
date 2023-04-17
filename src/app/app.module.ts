@@ -17,6 +17,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { HttpService } from './services/http/http.service';
 import { API_URL_1, API_URL_2 } from './shared/constants/inject-tokens';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -33,6 +34,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LoginComponent,
     ToolbarComponent,
     UserProfileComponent,
+    ProgressBarComponent,
   ],
   imports: [
     BrowserModule,
