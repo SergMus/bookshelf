@@ -5,6 +5,8 @@ import { REGISTRATION_USER_ID } from './shared/constants/user-login';
 import { IUser } from './shared/models/user.interface';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ToggleState } from './shared/models/toggle.enum';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ToggleService } from './services/toggle/toggle.service';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +17,20 @@ export class AppComponent implements OnInit {
   @ViewChild('leftMenu') menu?: MatSidenav;
   public title: string = 'bookshelf';
   public isLogined?: boolean = false;
-  public isPanelActive: boolean = false;
-  public isProfileActive: boolean = false;
+  public isPanelActive$?: Subject<boolean>;
+  public isProfileActive$?: Subject<boolean>;
   public userProfile?: IUser;
 
-  constructor(public authService: AuthService, private http: HttpService) {}
+  constructor(
+    public authService: AuthService,
+    private http: HttpService,
+    private toggleService: ToggleService
+  ) {}
 
   public ngOnInit(): void {
     this.getUser();
+    this.isPanelActive$ = this.toggleService.isPanelActive$;
+    this.isProfileActive$ = this.toggleService.isProfileActive$;
   }
 
   public get checkAuth(): boolean {
@@ -37,15 +45,6 @@ export class AppComponent implements OnInit {
 
   public toggle(state: string): void {
     this.menu?.toggle();
-    switch (state) {
-      case ToggleState.Panel:
-        this.isPanelActive = !this.isPanelActive;
-        break;
-      case ToggleState.Profile:
-        this.isProfileActive = !this.isProfileActive;
-        break;
-      default:
-        throw new Error(`Invalid toggle state: ${state}`);
-    }
+    this.toggleService.onToggle(state);
   }
 }

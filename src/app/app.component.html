@@ -29,7 +29,7 @@
     <!-- Content -->
     <mat-sidenav-content>
       <app-toolbar
-        [isPanelActive]="isPanelActive"
+        [isPanelActive]="isPanelActive$ | async"
         (panelBtnClick)="toggle($event)"
       ></app-toolbar>
 
@@ -38,7 +38,7 @@
       <!-- View Profile Card -->
       <app-user-profile
         [userProfile]="userProfile"
-        [isActive]="isProfileActive"
+        [isActive]="isProfileActive$ | async"
         (closeBtnClick)="toggle($event)"
       ></app-user-profile>
     </mat-sidenav-content>

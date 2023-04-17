@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ToggleState } from 'src/app/shared/models/toggle.enum';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,10 +7,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent {
-  @Input() isPanelActive: boolean = false;
+  @Input() isPanelActive: boolean | null = false;
   @Output() panelBtnClick = new EventEmitter<string>();
 
   public showPanel() {
-    this.panelBtnClick.emit('panel');
+    this.panelBtnClick.emit(ToggleState.Panel);
   }
 }

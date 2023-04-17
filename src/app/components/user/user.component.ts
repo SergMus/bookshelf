@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ToggleState } from 'src/app/shared/models/toggle.enum';
 import { IUser } from 'src/app/shared/models/user.interface';
 
 @Component({
