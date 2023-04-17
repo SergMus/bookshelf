@@ -23,7 +23,7 @@
     </mat-sidenav>
 
     <!-- Content -->
-    <mat-sidenav-content>
+    <mat-sidenav-content class="content">
       <app-toolbar
         [isPanelActive]="isPanelActive$ | async"
         (panelBtnClick)="onToggle($event)"
@@ -31,6 +31,8 @@
 
       <!-- Rendered Content -->
       <router-outlet></router-outlet>
+
+      <app-loader></app-loader>
 
       <!-- View Profile Card -->
       <app-user-profile
