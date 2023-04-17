@@ -5,6 +5,7 @@ import {
   EventEmitter,
   HostListener,
 } from '@angular/core';
+import { ToggleState } from 'src/app/shared/models/toggle.enum';
 import { IUser } from 'src/app/shared/models/user.interface';
 
 @Component({
@@ -19,10 +20,10 @@ export class UserProfileComponent {
     }
   }
   @Input() userProfile?: IUser;
-  @Input() isActive: boolean = false;
+  @Input() isActive: boolean | null = false;
   @Output() closeBtnClick = new EventEmitter<string>();
 
   public showProfile() {
-    this.closeBtnClick.emit('profile');
+    this.closeBtnClick.emit(ToggleState.Profile);
   }
 }

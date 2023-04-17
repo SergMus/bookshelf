@@ -19,7 +19,7 @@
       <app-user
         [leftMenu]="leftMenu"
         [user]="userProfile"
-        (profileBtnClick)="toggle('profile')"
+        (profileBtnClick)="onToggle('profile')"
       ></app-user>
 
       <!-- Navigation -->
@@ -29,8 +29,8 @@
     <!-- Content -->
     <mat-sidenav-content>
       <app-toolbar
-        [isPanelActive]="isPanelActive"
-        (panelBtnClick)="toggle($event)"
+        [isPanelActive]="isPanelActive$ | async"
+        (panelBtnClick)="onToggle($event)"
       ></app-toolbar>
 
       <!-- Rendered Content -->
@@ -38,8 +38,8 @@
       <!-- View Profile Card -->
       <app-user-profile
         [userProfile]="userProfile"
-        [isActive]="isProfileActive"
-        (closeBtnClick)="toggle($event)"
+        [isActive]="isProfileActive$ | async"
+        (closeBtnClick)="onToggle($event)"
       ></app-user-profile>
     </mat-sidenav-content>
   </mat-sidenav-container>
