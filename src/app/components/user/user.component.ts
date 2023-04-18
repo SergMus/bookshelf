@@ -12,12 +12,12 @@ import { IUser } from 'src/app/shared/models/user.interface';
 export class UserComponent {
   @Input() leftMenu?: MatSidenav;
   @Input() user?: IUser;
-  @Output() profileBtnClick = new EventEmitter<boolean>();
+  @Output() profileBtnClick = new EventEmitter<string>();
 
   constructor(public authService: AuthService) {}
 
   public toggle(): void {
-    this.profileBtnClick.emit(true);
+    this.profileBtnClick.emit('profile');
   }
 
   public logout(): void {

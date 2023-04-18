@@ -1,12 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  HostBinding,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatRow, MatRowDef, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSelect } from '@angular/material/select';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -16,7 +10,6 @@ import { BooksListService } from 'src/app/services/books-list/books-list.service
 import { Unsubscriber } from 'src/app/shared/classes/destroy.abstract';
 import { takeUntil } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'books-grid',
@@ -28,7 +21,7 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
   @ViewChild('filterSelect') filterInput!: MatSelect;
   @ViewChild('sortSelect') sortInput!: MatSelect;
 
-  public readonly displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'position',
     'title',
     'description',
@@ -38,6 +31,7 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
   public booksList: IBook[] = [];
   public pageTitle = 'Bookshelf';
   public selectedIndex: number = -1;
+  public isManageActive: boolean = false;
   public dataSource?: any = null;
   public dateRange: Date[] = [];
   public rangeDatePicker = new FormGroup({
@@ -96,6 +90,7 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
 
   public onRowClick(row: HTMLTableElement): void {
     this.selectedIndex = +row.id;
+    this.onManageClick();
   }
 
   public setDateRange(): void {
@@ -141,4 +136,22 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
       };
     }
   }
+
+  public onManageClick(): void {
+    this.isManageActive = !this.isManageActive;
+    console.log(this.isManageActive);
+
+    if (this.isManageActive) {
+      this.displayedColumns.push('manage');
+    } else {
+      const index = this.displayedColumns.indexOf('manage');
+      if (index !== -1) {
+        this.displayedColumns.splice(index, 1);
+      }
+    }
+  }
+
+  public onEdit(item: any): void {}
+
+  public onDelete(item: any): void {}
 }

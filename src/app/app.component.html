@@ -1,5 +1,5 @@
 <!-- Progress bar -->
-<app-progress-bar [isProgress]="isLoading"></app-progress-bar>
+<app-progress-bar></app-progress-bar>
 
 <div *ngIf="checkAuth; then mainBlock; else loginBlock"></div>
 
@@ -15,7 +15,7 @@
       <app-user
         [leftMenu]="leftMenu"
         [user]="userProfile"
-        (profileBtnClick)="onToggle('profile')"
+        (profileBtnClick)="onToggle($event)"
       ></app-user>
 
       <!-- Navigation -->

@@ -1,1 +1,20 @@
-<p>not-found works!</p>
+<div class="body notfound">
+  <div class="panel">
+    <div class="image">
+      <img src="./../../../assets/icon-404.png" width="50px" />
+    </div>
+    <div class="detail">
+      <h1>{{ "page not found" | uppercase }}</h1>
+      <p>Requested resource is not available.</p>
+      <button
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/']"
+        [queryParams]="{ btnText: buttonText, link: link }"
+        class="button"
+      >
+        <span>go to {{ buttonText | uppercase }}</span>
+      </button>
+    </div>
+  </div>
+</div>

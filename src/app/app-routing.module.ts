@@ -32,6 +32,7 @@ const routes: Routes = [
       import('./pages/not-found/not-found.module').then(
         (m) => m.NotFoundModule
       ),
+    data: { btnText: 'books page', link: 'books' },
   },
 ];
 
