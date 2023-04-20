@@ -31,7 +31,7 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
   public booksList: IBook[] = [];
   public pageTitle = 'Bookshelf';
   public selectedIndex: number = -1;
-  public isManageActive: boolean = false;
+  public isManageActive: boolean = true;
   public dataSource?: any = null;
   public dateRange: Date[] = [];
   public rangeDatePicker = new FormGroup({
@@ -139,16 +139,6 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
 
   public onManageClick(): void {
     this.isManageActive = !this.isManageActive;
-    console.log(this.isManageActive);
-
-    if (this.isManageActive) {
-      this.displayedColumns.push('manage');
-    } else {
-      const index = this.displayedColumns.indexOf('manage');
-      if (index !== -1) {
-        this.displayedColumns.splice(index, 1);
-      }
-    }
   }
 
   public onEdit(item: any): void {}

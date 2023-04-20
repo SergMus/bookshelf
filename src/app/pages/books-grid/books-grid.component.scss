@@ -73,3 +73,11 @@ th.mat-sort-header-sorted {
 .green {
   color: #04aa6d;
 }
+
+.btns-group {
+  display: none;
+
+  &.show {
+    display: inline;
+  }
+}

@@ -4,6 +4,7 @@ import { BooksGridComponent } from './books-grid.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TdContentDirective } from 'src/app/directives/td-content.directive';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [BooksGridComponent],
+  declarations: [BooksGridComponent, TdContentDirective],
   imports: [
     CommonModule,
     FormsModule,
