@@ -17,6 +17,7 @@
                   matInput
                   formControlName="title"
                   [errorStateMatcher]="matcher"
+                  [value]="bookData ? bookData.title : ''"
                 />
                 <mat-error
                   *ngIf="
@@ -38,6 +39,7 @@
                   type="email"
                   formControlName="description"
                   [errorStateMatcher]="matcher"
+                  [value]="bookData ? bookData.description : ''"
                 />
                 <mat-error
                   *ngIf="
@@ -62,6 +64,7 @@
                   matInput
                   [matDatepicker]="picker"
                   formControlName="publishDate"
+                  [value]="bookData ? bookData.publishDate : ''"
                   (dateChange)="addDate($event)"
                 />
                 <mat-hint>MM/DD/YYYY</mat-hint>
@@ -84,6 +87,7 @@
                   matInput
                   formControlName="pageCount"
                   [errorStateMatcher]="matcher"
+                  [value]="bookData ? bookData.pageCount : ''"
                 />
                 <mat-error
                   *ngIf="

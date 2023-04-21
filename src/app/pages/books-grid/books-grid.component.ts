@@ -10,6 +10,7 @@ import { BooksListService } from 'src/app/services/books-list/books-list.service
 import { Unsubscriber } from 'src/app/shared/classes/destroy.abstract';
 import { takeUntil } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'books-grid',
@@ -44,7 +45,8 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
 
   constructor(
     private httpService: HttpService,
-    private booksListService: BooksListService
+    private booksListService: BooksListService,
+    private router: Router
   ) {
     super();
   }
@@ -141,7 +143,9 @@ export class BooksGridComponent extends Unsubscriber implements OnDestroy {
     this.isManageActive = !this.isManageActive;
   }
 
-  public onEdit(item: any): void {}
+  public onEdit(bookId: number): void {
+    this.router.navigate(['books/edit', bookId]);
+  }
 
   public onDelete(item: any): void {}
 }

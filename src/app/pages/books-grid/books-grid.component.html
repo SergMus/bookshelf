@@ -144,7 +144,7 @@
         {{ element.publishDate | date }}
 
         <div class="btns-group">
-          <button mat-icon-button class="green" (click)="onEdit($event)">
+          <button mat-icon-button class="green" (click)="onEdit(element.id)">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="onDelete($event)">

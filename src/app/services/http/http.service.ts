@@ -29,9 +29,19 @@ export class HttpService {
     return this.http.get<IBook[]>(this.apiUrl2).pipe(catchError(httpError));
   }
 
+  public getOneBook(bookId: number): Observable<IBook> {
+    return this.http
+      .get<IBook>(`${this.apiUrl2}/${bookId}`)
+      .pipe(catchError(httpError));
+  }
+
   public createBook(book: IBook): Observable<IBook> {
     return this.http
       .post<IBook>(this.apiUrl2, book)
       .pipe(catchError(httpError));
+  }
+
+  public updateBook(book: IBook): Observable<IBook> {
+    return this.http.put<IBook>(this.apiUrl2, book).pipe(catchError(httpError));
   }
 }

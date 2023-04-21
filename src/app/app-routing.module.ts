@@ -23,6 +23,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'books/edit/:id',
+    loadChildren: () =>
+      import('./pages/book-form//book-form.module').then(
+        (m) => m.BookFormModule
+      ),
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },
