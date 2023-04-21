@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -29,7 +34,8 @@ export class BookFormComponent
   constructor(
     private httpService: HttpService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private fb: FormBuilder
   ) {
     super();
   }
@@ -39,7 +45,7 @@ export class BookFormComponent
   }
 
   public initializeFormGroup(): void {
-    this.form = new FormGroup({
+    this.form = this.fb.group({
       title: new FormControl('', [
         Validators.minLength(2),
         Validators.required,

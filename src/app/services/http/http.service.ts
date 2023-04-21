@@ -34,4 +34,10 @@ export class HttpService {
       .post<IBook>(this.apiUrl2, book)
       .pipe(catchError(httpError));
   }
+
+  public updateBook(book: IBook): Observable<IBook> {
+    return this.http
+      .put<IBook>(this.apiUrl2, book)
+      .pipe(catchError(httpError));
+  }
 }
