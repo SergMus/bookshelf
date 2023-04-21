@@ -1,5 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+=======
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+>>>>>>> 3bd1ce4 (refactor: book-form component)
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -33,8 +42,12 @@ export class BookFormComponent
     private httpService: HttpService,
     private router: Router,
     private _snackBar: MatSnackBar,
+<<<<<<< HEAD
     private fb: FormBuilder,
     private route: ActivatedRoute
+=======
+    private fb: FormBuilder
+>>>>>>> 3bd1ce4 (refactor: book-form component)
   ) {
     super();
   }
@@ -46,6 +59,7 @@ export class BookFormComponent
 
   public initializeFormGroup(): void {
     this.form = this.fb.group({
+<<<<<<< HEAD
       title: ['', [Validators.minLength(2), Validators.required]],
       description: ['', [Validators.minLength(2), Validators.required]],
       publishDate: ['', [Validators.required]],
@@ -53,6 +67,21 @@ export class BookFormComponent
         '',
         [Validators.required, Validators.pattern(REGEX_ONLY_DIGITS)],
       ],
+=======
+      title: new FormControl('', [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
+      description: new FormControl('', [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
+      publishDate: new FormControl('', [Validators.required]),
+      pageCount: new FormControl('', [
+        Validators.required,
+        Validators.pattern(REGEX_ONLY_DIGITS),
+      ]),
+>>>>>>> 3bd1ce4 (refactor: book-form component)
     });
   }
 
